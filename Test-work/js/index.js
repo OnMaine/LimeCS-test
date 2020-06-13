@@ -1,11 +1,15 @@
 let colors = ["#FC74FD", "#3AB745", "#029990", "#3501CB",
-             "#2E2C75", "#673A7E"];
+  "#2E2C75", "#673A7E"
+];
 let points = ["1", "2", "3", "4",
-                   "5", "6"];
+  "5", "6"
+];
 
 let startAngle = 0;
 let arc = Math.PI / 3;
 let spinTimeout = null;
+
+let isOpen = 0;
 
 let spinArcStart = 10;
 let spinTime = 0;
@@ -21,14 +25,14 @@ function drawRouletteWheel() {
     let insideRadius = 0;
 
     ctx = canvas.getContext("2d");
-    ctx.clearRect(0,0,500,500);
+    ctx.clearRect(0, 0, 500, 500);
     //circleLine
     ctx.strokeStyle = "black";
     ctx.lineWidth = 2;
 
     ctx.font = 'bold 20px Helvetica, Arial';
 
-    for(let i = 0; i < 6; i++) {
+    for (let i = 0; i < 6; i++) {
       let angle = startAngle + i * arc;
       ctx.fillStyle = colors[i];
       //circle
@@ -41,7 +45,7 @@ function drawRouletteWheel() {
       ctx.save();
       ctx.fillStyle = "white";
       ctx.translate(250 + Math.cos(angle + arc / 2) * textRadius,
-                    250 + Math.sin(angle + arc / 2) * textRadius);
+        250 + Math.sin(angle + arc / 2) * textRadius);
       ctx.rotate(angle + arc / 2 + Math.PI / 2);
       let text = points[i];
       ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
@@ -64,6 +68,9 @@ function drawRouletteWheel() {
 }
 
 function spin() {
+  if (isOpen == 1) {
+    closeModal();
+  }
   spinAngleStart = Math.random() * 10 + 10;
   spinTime = 0;
   spinTimeTotal = Math.random() * 3 + 4 * 1500;
@@ -72,7 +79,7 @@ function spin() {
 
 function rotateWheel() {
   spinTime += 30;
-  if(spinTime >= spinTimeTotal) {
+  if (spinTime >= spinTimeTotal) {
     stopRotateWheel();
     return;
   }
@@ -87,17 +94,27 @@ function stopRotateWheel() {
   let degrees = startAngle * 180 / Math.PI + 90;
   let arcd = arc * 180 / Math.PI;
   let index = Math.floor((360 - degrees % 360) / arcd);
-  ctx.save();
-  ctx.font = 'bold 30px Helvetica, Arial';
   let text = points[index]
-  ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
-  ctx.restore();
+  document.getElementById("point").innerHTML = text;
+  openModal();
+}
+
+function openModal() {
+  let overlay = document.getElementById('popup-wrapp');
+  overlay.setAttribute("style", "visibility: visible; opacity: 1;");
+  isOpen = 1;
+}
+
+function closeModal() {
+  let overlay = document.getElementById('popup-wrapp');
+  overlay.setAttribute("style", "visibility: hiden; opacity: 0;");
+  isOpen = 0;
 }
 
 function easeOut(t, b, c, d) {
-  let ts = (t/=d)*t;
-  let tc = ts*t;
-  return b+c*(tc + -3*ts + 3*t);
+  let ts = (t /= d) * t;
+  let tc = ts * t;
+  return b + c * (tc + -3 * ts + 3 * t);
 }
 
 drawRouletteWheel();

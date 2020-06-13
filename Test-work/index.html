@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -15,6 +15,17 @@
       <canvas id="canvas" width="500" height="500"></canvas></div>
     <div class="button">
       <input type="button" class="spin-button" value="spin" onclick="spin();" />
+    </div>
+  </div>
+  <div id="popup-wrapp" class="overlay">
+    <div class="popup">
+      <div class="close-btn">
+        <a class="close" onclick="closeModal();" href="#">&times;</a>
+      </div>
+      <div id="point" class="point"></div>
+      <div class="content">
+        <input type="button" class="spin-button" value="spin" onclick="spin();" />
+      </div>
     </div>
   </div>
 
