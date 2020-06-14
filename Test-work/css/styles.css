@@ -54,7 +54,7 @@ canvas {
   border-radius: 5px;
   width: 70%;
   position: relative;
-  transition: all 2s ease-in-out;
+  transition: all 1s ease-in-out;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr 1fr;
